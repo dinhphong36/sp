@@ -1,0 +1,25 @@
+{
+  "name": "shop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon --inspect src/index.js",
+    "watch": "sass --watch src/resources/scss/app.scss:src/public/css/app.css --style=expanded",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "phong",
+  "license": "ISC",
+  "devDependencies": {
+    "express": "^5.1.0",
+    "express-handlebars": "^8.0.3",
+    "mongoose-delete": "^1.0.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.10",
+    "sass": "^1.89.2"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.0"
+  }
+}

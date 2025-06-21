@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trang Admin</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: "Segoe UI", sans-serif;
+      display: flex;
+      min-height: 100vh;
+      background-color: #f1f5f9;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background-color: #0f172a;
+      color: white;
+      padding: 20px;
+      flex-shrink: 0;
+    }
+    .sidebar h2 {
+      margin-bottom: 20px;
+    }
+    .sidebar a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin: 10px 0;
+      transition: 0.3s;
+    }
+    .sidebar a:hover {
+      background-color: #1e293b;
+      padding-left: 10px;
+    }
+
+    /* Main */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      background-color: #1e293b;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Content */
+    .content {
+      padding: 20px;
+    }
+
+    .content h2 {
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      padding: 8px 15px;
+      margin-right: 5px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      color: white;
+    }
+    .btn-add {
+      background-color: #10b981;
+    }
+    .btn-edit {
+      background-color: #3b82f6;
+    }
+    .btn-delete {
+      background-color: #ef4444;
+    }
+
+    .btn:hover {
+      opacity: 0.85;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      background-color: white;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+
+    table th, table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Quản trị</h2>
+    <a href="#">Dashboard</a>
+    <a href="#">Sản phẩm</a>
+    <a href="#">Người dùng</a>
+    <a href="#">Đơn hàng</a>
+    <a href="#">Đăng xuất</a>
+  </div>
+
+  <div class="main">
+    <div class="header">
+      <h1>Trang Admin</h1>
+      <p>Xin chào, Admin!</p>
+    </div>
+
+    <div class="content">
+      <h2>Danh sách sản phẩm</h2>
+      <button class="btn btn-add">➕ Thêm sản phẩm</button>
+
+      <table>
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Tên sản phẩm</th>
+            <th>Giá</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Trái mít</td>
+            <td>100.000đ</td>
+            <td>
+              <button class="btn btn-edit">Sửa</button>
+              <button class="btn btn-delete">Xoá</button>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Trái dưa hấu</td>
+            <td>80.000đ</td>
+            <td>
+              <button class="btn btn-edit">Sửa</button>
+              <button class="btn btn-delete">Xoá</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
