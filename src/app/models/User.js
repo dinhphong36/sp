@@ -9,9 +9,10 @@ const UserSchema = new Schema({
     sdt: {type: String, },
     role: { 
         type: String, 
-        enum: ['user', 'admin'], // Chỉ chấp nhận 2 giá trị: 'user' hoặc 'admin'
-        default: 'user' // Mặc định là 'user' khi tạo mới
-    }
+        
+    },
+    createdAt: {type: Date, default: Date.now},
+    updatedAt: {type: Date, default: Date.now},
    
     
 

@@ -1,0 +1,37 @@
+<form action="">
+    <table class="table mt-4">
+  <thead>
+    <tr>
+      <th scope="col" style="align-items: center;">STT</th>
+      <th scope="col" style="align-items: center;">Username</th>
+      <th scope="col" style="align-items: center;">password</th>
+      <th scope="col" style="align-items: center;">email</th>
+      <th scope="col" style="align-items: center;">role</th>
+      <th scope="col" style="align-items: center;">SĐT</th>
+      <th scope="col" style="align-items: center;">Ngày Tạo</th>
+      <th scope="col" style="align-items: center;">Sửa</th>
+      <th scope="col" style="align-items: center;">Xóa</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each User}}
+    <tr>
+      <td style="align-items: center;">{{sum @index 1}}</td>
+      <td style="align-items: center;">{{this.username}}</td>
+      <td style="align-items: center;">{{this.password}}</td>
+      <td style="align-items: center;">{{this.email}}</td>
+      <td style="align-items: center;">{{this.role}}</td>
+      <td style="align-items: center;">{{this.sdt}}</td>
+      <td style="align-items: center;">{{this.createdAt}}</td>
+      <td style="align-items: center;">
+        <a href="/admin/showUser/{{this._id}}/edit">Sửa</a>
+      </td>
+     <td style="align-items: center;">
+        <a href="/admin/showUser/{{this._id}}/deleteUser">Xóa</a>
+    </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+</form>

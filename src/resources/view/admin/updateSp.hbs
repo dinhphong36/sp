@@ -1,0 +1,35 @@
+<form action="">
+    <table class="table mt-4">
+  <thead>
+    <tr>
+      <th scope="col" style="align-items: center;">STT</th>
+      <th scope="col" style="align-items: center;">Tên Điện Thoại</th>
+      <th scope="col" style="align-items: center;">Ảnh</th>
+      <th scope="col" style="align-items: center;">Giá</th>
+      <th scope="col" style="align-items: center;">Ngày Tạo</th>
+      <th scope="col" style="align-items: center;">Sửa</th>
+      <th scope="col" style="align-items: center;">Xóa</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each mit}}
+    <tr>
+      <td style="align-items: center;">{{sum @index 1}}</td>
+      <td style="align-items: center;">{{this.name}}</td>
+      <td style="align-items: center;">
+        <img src="{{this.image}}" width="80px" height="80px" />
+      </td>
+      <td style="align-items: center;">{{this.price}}</td>
+      <td style="align-items: center;">{{this.createdAt}}</td>
+      <td style="align-items: center;">
+        <a href="/admin/{{this._id}}/edit">Sửa</a>
+      </td>
+     <td style="align-items: center;">
+        <a href="/admin/{{this._id}}/deleteSp">Xóa</a>
+    </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+</form>

@@ -1,0 +1,80 @@
+<form  class="mt-4" id="form-admininfo">
+    <div class="form-group">
+        <label for="name">Tên sản phẩm</label>
+        <input type="text" class="form-control" id="name" name="name" aria-describedby="name">
+    </div>
+    <div class="form-group">
+        <label for="image">image</label>
+        <input type="text" class="form-control" id="image" name="image" aria-describedby="image">
+    </div>
+    <div class="form-group">
+        <label for="price">Giá</label>
+        <input type="number" class="form-control" id="price" name="price" aria-describedby="price">
+    </div>
+    <div class="form-group">
+        <label for="info">info</label>
+        <textarea type="text" class="form-control" id="info" name="info" aria-describedby="info"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<script>
+    $(document).ready(function(){
+        $("#form-admininfo").submit(function(event){
+            event.preventDefault();
+
+            var name = $('#name').val();
+            var image = $('#image').val();
+            var price = $('#price').val();
+            var info = $('#info').val();
+
+            if(!name || !image || !price || !info){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi',
+                    text: 'Vui lòng nhập đầy đủ thông tin',
+                });
+                return; // Dừng lại nếu validate thất bại
+            }
+
+            // Gửi AJAX khi validate thành công
+            $.ajax({
+                url: "/admin/added",  // Sửa lại URL chính xác
+                method: "POST",
+                data: {
+                    name: name,
+                    image: image,
+                    price: price,
+                    info: info,
+                },
+                success: function(response){
+                    if(response.message === 'Thêm thành công'){
+                        Swal.fire({
+                            icon: 'success',
+                            title: response.message,
+                        }).then((result) => {
+                            if(result.isConfirmed){
+                                window.location.href = "/admin/admininfo";
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi',
+                            text: response.message || 'Có lỗi xảy ra',
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", status, error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi',
+                        text: 'Đã xảy ra lỗi trong quá trình thêm sản phẩm: ' + (xhr.responseJSON?.message || ''),
+                    });
+                }
+            });
+        });
+    });
+</script>
+
