@@ -5,6 +5,9 @@ const User = require("../app/models/User");
 
 const adminController = require("../app/controllers/adminController");
 
+
+
+
 //Admin
 router.get("/admin", adminController.index);
 //Tạo sản phẩm

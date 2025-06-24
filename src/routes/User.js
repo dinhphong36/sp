@@ -5,42 +5,52 @@ const User = require("../app/models/User");
 
 const UserController = require("../app/controllers/UserController");
 
-var checkLogin = (req, res, next) => {
+var checkLogin = (req,res, next) => {
     var token = req.cookies?.token;
     if(!token){
-        next()
+        next();
     }else{
-        var idUser = jwt.verify(token, "mk");
-        User.findOne({_id: idUser._id})
-            .then(data=>{
-               req.data = data
-               next()
+        var idUser = jwt.verify(token, 'mk');
+        User.findOne({_id : idUser._id})
+            .then(data =>{
+                req.data = data;
+                next();
+            }).catch(err =>{
+                console.log(err.message);
+                
             })
-            .catch(err=>{
-                console.log(err.message)
-            })
-        }
     }
+}
 
-var checkUser = (req, res, next) => {
+var checkUser = (req,res, next) => {
     if(req.data){
-        var role = req.data.role
-        if(role === "user"){
-            res.redirect("/")
-        }else if(role === "admin"){
-            res.redirect("/admin")
+        var role = req.data.role;
+        if(role === 'user'){
+            res.redirect("/home");
+        }else if(role === 'admin'){
+            res.redirect("/admin");
         }
     }else if(!req.data){
-        next()
+        next();
     }
 }
 
 
-router.get("/login", checkLogin, checkUser, UserController.login);
+
 router.get("/register", UserController.register);
+router.get("/login", checkLogin,checkUser,UserController.login);
 router.post("/created", UserController.created);
 router.post("/logined", UserController.logined);
-router.get("/:id", UserController.detail);
-router.get("/", checkUser,UserController.show);
+//Giỏ hàng
+router.post("/cart/:id", UserController.addToCart);
+router.get("/order", UserController.showOrder);
+router.post("/update-order/:id", UserController.updateOrder);
+router.delete("/delete-order/:id", UserController.deleteOrder);
+//
+router.get("/:id", UserController.detail);  
+router.get("/", checkLogin,UserController.show);
+
+
+
 
 module.exports = router;

@@ -1,9 +1,8 @@
-const { default: mongoose } = require("mongoose");  
 const User = require("../models/User");
 const mit = require("../models/mit");
+const Cart = require("../models/Cart");
 const { mongooseToObject, mutipleMongoToObject } = require("../util/mongoose");
 const jwt = require('jsonwebtoken');
-
 class UserController {
     // GET /
     show(req, res) {
@@ -72,31 +71,53 @@ class UserController {
     }
 
     // GET /login
-    login(req, res) {
-        res.render("indexChung/login");
-    }// POST /login
-    logined(req, res) {
-        console.log("Dữ liệu nhận được:", req.body); 
-       const {username, password} = req.body;
-       const findUserByUserName = User.findOne({username: username}).exec();
-       const findUserByPassword = User.findOne({password: password}).exec();
-       
-       Promise.all([findUserByUserName, findUserByPassword])
-            .then(([userByUsername, userByPassword]) =>{
-                if(userByUsername && userByPassword){
-                   const token = jwt.sign({_id:userByUsername._id}, "mk"); 
-                   return res.json({message: userByUsername.role, token: token})
-                }else if(userByUsername && !userByPassword){
-                    return res.json({message: "Sai mật khẩu"})
-                }else{
-                    return res.json({message: "User không tồn tại"})
-                }
-            })
-            .catch((err) => {
-                console.error("Lỗi chi tiết:", err); 
-               return res.status(500).json({message: "Lỗi"}) 
-            })
+    login(req,res,next){
+        res.render('indexChung/login');
+        
+    }
 
+    //[POST] /logined
+    logined(req, res, next) {
+        const { username, password } = req.body;
+        
+        if (!username || !password) {
+            return res.status(400).json({ message: 'Vui lòng điền đầy đủ thông tin' });
+        }
+    
+        User.findOne({ username: username })
+            .then(user => {
+                if (!user) {
+                    return res.json({ message: 'Tài khoản không tồn tại' });
+                }
+                
+                // So sánh mật khẩu (cần thêm bcrypt để mã hóa mật khẩu)
+                if (user.password !== password) {
+                    return res.json({ message: 'Sai mật khẩu' });
+                }
+    
+                // Tạo token
+                const token = jwt.sign(
+                    { _id: user._id, role: user.role }, 
+                    'mk',
+                    { expiresIn: '1d' } // Thêm thời hạn cho token
+                );
+    
+                // Lưu token vào cookie
+                res.cookie('token', token, { 
+                    httpOnly: true,
+                    maxAge: 24 * 60 * 60 * 1000 // 1 ngày
+                });
+    
+                return res.json({ 
+                    message: 'Đăng nhập thành công', 
+                    role: user.role,
+                    token: token 
+                });
+            })
+            .catch(error => {
+                console.error('Lỗi đăng nhập:', error);
+                return res.status(500).json({ message: 'Đã xảy ra lỗi' });
+            });
     }
     // GET /:id
     detail(req, res) {
@@ -153,7 +174,111 @@ class UserController {
             renderWithMit(); // Trường hợp không có token
         }
     }
+    //post /cart/:id
+    addToCart(req, res, next) {
+        const quantity = parseInt(req.body.quantity, 10);
+        const id = req.params.id;
     
+        console.log(quantity);
+    
+        mit.findOne({ _id: id })
+            .then(mit => {
+                if (!mit) {
+                    return res.status(404).json({ message: 'Sản phẩm không tồn tại' });
+                }
+    
+                // Tìm sản phẩm trong giỏ hàng (không phân biệt người dùng)
+                Cart.findOne({ name: mit.name })
+                    .then(existingItem => {
+                        if (existingItem) {
+                            // Nếu đã có sản phẩm trong giỏ, cập nhật số lượng
+                            return Cart.findByIdAndUpdate(
+                                existingItem._id,
+                                { $inc: { quantity: quantity } },
+                                { new: true }
+                            ).then(() => {
+                                return res.json({ message: 'Cập nhật thành công' });
+                            });
+                        } else {
+                            // Nếu chưa có, thêm mới vào giỏ hàng
+                            const newOrder = new Cart({
+                                userId: null, // Không có user đăng nhập
+                                name: mit.name,
+                                image: mit.image,
+                                price: mit.price,
+                                info: mit.info,
+                                quantity: quantity
+                            });
+    
+                            return newOrder.save()
+                                .then(() => {
+                                    return res.json({ message: 'Thêm thành công' });
+                                });
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Lỗi khi kiểm tra giỏ hàng:", error);
+                        return res.status(500).json({ message: 'Lỗi server khi truy vấn giỏ hàng' });
+                    });
+            })
+            .catch(error => {
+                console.error("Lỗi khi truy vấn sản phẩm:", error);
+                return res.status(500).json({ message: 'Lỗi server khi truy vấn sản phẩm' });
+            });
+    }
+    //get /order
+    showOrder(req, res) {
+        Cart.find({})
+        .then(cart => {
+            const array = cart.map(product => {
+                return product.price * product.quantity;
+            });
+    
+            const tong = array.reduce((total, value) => total + value, 0);
+    
+            res.render('Client/order', {
+                cart: mutipleMongoToObject(cart),
+                tong: tong,
+            });
+        })
+        .catch(error => {
+            console.error("Lỗi khi truy vấn giỏ hàng:", error);
+            res.status(500).send("Lỗi server");
+        });
+    
+    }
+    //post /update-order/:id
+    updateOrder(req, res) {
+        const quantity = req.body.quantity;
+        const id = req.params.id;
+        console.log(quantity);
+        
+        // Cập nhật không cần token
+        Cart.updateOne({ _id: id }, { quantity: quantity })
+            .then(() => {
+                return res.json({ message: 'Cập nhật thành công' });
+            })
+            .catch(error => {
+                console.error('Lỗi khi cập nhật giỏ hàng:', error);
+                return res.status(500).json({ message: 'Lỗi server khi cập nhật' });
+            });
+    
+    }
+    //post /delete-order/:id
+    deleteOrder(req, res) {
+        const id = req.params.id;
+        console.log(id);
+        
+        // Xóa không cần token
+        Cart.deleteOne({ _id: id })
+            .then(() => {
+                return res.json({ message: 'Xóa thành công' });
+            })
+            .catch(error => {
+                console.error('Lỗi khi xóa giỏ hàng:', error);
+                return res.status(500).json({ message: 'Lỗi server khi xóa sản phẩm' });
+            });
+    }
 }
 
 module.exports = new UserController;

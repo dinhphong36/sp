@@ -4,12 +4,67 @@
   </div>
   <div class="col-lg-6">
     <h1>{{mit.name}}</h1>
-    <a href="/order/{{mit._id}}">
-      <button>MUA</button>
-    </a>
+    <form id="addOrder">
+      <label for="quantity">Nhập số lượng:</label>
+      <input type="number" id="quantity" name="quantity" min="1" max="100" value="1" />
+      <br /><br />
+      <button type="submit" class="btn btn-success">Thêm vào giỏ hàng</button>
+    </form>
   </div>
 </div>
 
 <div class="row mt-3">
   {{mit.info}}
 </div>
+
+<script>
+  $(document).ready(function () {
+    $("#addOrder").submit(function (event) {
+      event.preventDefault();
+
+      const quantity = parseInt($("#quantity").val(), 10);
+      const idMit = "{{mit._id}}";
+
+      // Kiểm tra dữ liệu đầu vào
+      if (!quantity || quantity < 1 || quantity > 100) {
+        Swal.fire({
+          title: "Vui lòng nhập số lượng hợp lệ (1 - 100)",
+          icon: "error"
+        });
+        return;
+      }
+
+      $.ajax({
+        url: `/cart/${idMit}`,
+        method: "POST",
+        data: { quantity: quantity },
+        success: function (response) {
+          if (["Thêm thành công", "Cập nhật thành công"].includes(response.message)) {
+            Swal.fire({
+              title: response.message,
+              icon: "success",
+              timer: 1000,
+              showConfirmButton: false,
+              timerProgressBar: true,
+              didOpen: () => Swal.showLoading(),
+              willClose: () => {
+                window.location.href = "/"; // hoặc "/order" nếu bạn muốn về giỏ hàng
+              }
+            });
+          } else {
+            Swal.fire({
+              title: response.message || "Có lỗi xảy ra",
+              icon: "error"
+            });
+          }
+        },
+        error: function () {
+          Swal.fire({
+            title: "Đã xảy ra lỗi khi thêm vào giỏ hàng",
+            icon: "error"
+          });
+        }
+      });
+    });
+  });
+</script>

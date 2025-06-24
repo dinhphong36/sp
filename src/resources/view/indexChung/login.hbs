@@ -34,67 +34,71 @@
         }
         return "";
     }
-    $(document).ready(function() {
+
+    $(document).ready(function () {
         $("#form-login").submit(function(event){
             event.preventDefault();
 
-            var username = $('#username').val();
-            var password = $('#password').val();
+            var username = $("#username").val();
+            var password = $("#password").val();
 
             if(!username || !password){
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Lỗi',
-                    text: 'Vui lòng nhập đầy đủ thông tin',
-                })
+                    title:"Vui lòng điền đầy đủ thông tin.",
+                    icon: "error",
+                });
+                return;
             }
 
             $.ajax({
-                url:"Logined",
+                url: "/logined",
                 method: "POST",
                 data: {
                     username: $('#username').val(),
-                    password: $('#password').val(),
+                    password: $('#password').val()
                 },
                 success: function(response){
-                    console.log("Phản hồi từ server:", response); 
                     if(response.message == 'admin'){
-                       setCookie('token', response.token, 1);
-                       Swal.fire({
-                        icon: 'success',
-                        title: 'Đăng nhập thành công',
-                        text: 'Đang chuyển hướng',
-                        timer: 1000,
-                        timerProgressBar: true,
-                        showConfirmButton: false,
-                        didOpen: () => {
-                            Swal.showLoading();
-                        },
-                        willClose: () => {
-                            window.location.href = "/admin";
-                        }
-                    })
-                       
+                        setCookie('token', response.token, 1);
+                        Swal.fire({
+                            title: "Đăng nhập thành công Admin",
+                            icon: "success",
+                            timer: 500,
+                            showConfirmButton: false,
+                            timerProgressBar: true,
+                            didOpen: ()=>{
+                                Swal.showLoading();
+                            },
+                            willClose:() =>{
+                                window.location.href = "/admin";
+                            }
+                        })
                     }else if(response.message == 'user'){
                         setCookie('token', response.token, 1);
-                        window.location.href = "/";
+                        Swal.fire({
+                            title: "Đăng nhập thành công",
+                            icon: "success",
+                            timer: 500,
+                            showConfirmButton: false,
+                            timerProgressBar: true,
+                            didOpen: ()=>{
+                                Swal.showLoading();
+                            },
+                            willClose:() =>{
+                                window.location.href = "/";
+                            }
+                        })
                     }else{
                         Swal.fire({
-                            icon: 'error',
-                            title: 'Lỗi',
-                            text: response.message,
-                        })
+                            title: response.message,
+                            icon: "error",
+                        });
                     }
                 },
-                error: function(error){
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Lỗi',
-                        text: 'Đã xảy ra lỗi',
-                    })
+                error: function(){
+                    alert("Đã xảy ra lỗi trong quá trình đăng nhập !");
                 }
-            })
-            
-        })
-    })
+            });
+        });
+    });
 </script>

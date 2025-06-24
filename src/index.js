@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const routes = require("./routes");
 const jwt = require('jsonwebtoken');
 const db = require("./config/config");
+// const cookieParser = require('cookie-parser');
 db.connectDB();
 
 //Template engine
@@ -28,6 +29,7 @@ app.use(express.json());
 app.set("view engine", ".hbs");
 app.set("views", path.join(__dirname, "resources/view"));
 
+// app.use(cookieParser());
 routes(app);
 
 app.listen(port, () => {

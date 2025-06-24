@@ -19,7 +19,7 @@
     "sass": "^1.89.2"
   },
   "dependencies": {
-    "cookie-parser": "^1.4.7",
+   
     "jsonwebtoken": "^9.0.2",
     "method-override": "^3.0.0",
     "mongoose": "^8.16.0"

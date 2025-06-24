@@ -8,6 +8,7 @@ const routes = require("./routes");
 const jwt = require('jsonwebtoken');
 const db = require("./config/config");
 const methodOverride = require('method-override');
+
 db.connectDB();
 
 //Template engine
