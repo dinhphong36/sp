@@ -8,7 +8,7 @@ const routes = require("./routes");
 const jwt = require('jsonwebtoken');
 const db = require("./config/config");
 const methodOverride = require('method-override');
-const cookieParser = require('cookie-parser');
+
 db.connectDB();
 
 //Template engine
@@ -22,7 +22,7 @@ app.engine(".hbs", engine({
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.json()); 
 app.use(methodOverride('_method'));
-app.use(cookieParser());
+
 //Template engine
 app.set("view engine", ".hbs");
 app.set("views", path.join(__dirname, "resources/view"));
