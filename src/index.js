@@ -8,7 +8,7 @@ const db = require("./config/config");
 require("dotenv").config(); // Load biến môi trường
 
 const app = express();
-const PORT = process.env.PORT || 3000; // Dùng biến môi trường PORT nếu có
+const port = process.env.PORT || 3000; // Dùng biến môi trường PORT nếu có
 
 // Kết nối DB
 db.connectDB();
@@ -35,6 +35,6 @@ app.set("views", path.join(__dirname, "resources", "view"));
 routes(app);
 
 // Server
-app.listen(PORT, () => {
-    console.log(`✅ Server is running at http://localhost:${PORT}`);
+app.listen(port, () => {
+    console.log(`✅ Server is running at http://localhost:${port}`);
 });
