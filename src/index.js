@@ -6,9 +6,8 @@ const routes = require("./routes");
 const jwt = require("jsonwebtoken");
 const db = require("./config/config");
 require("dotenv").config(); // Load biến môi trường
-
+const port = process.env.PORT || 3000;
 const app = express();
-const port = process.env.PORT || 3000; // Dùng biến môi trường PORT nếu có
 
 // Kết nối DB
 db.connectDB();
