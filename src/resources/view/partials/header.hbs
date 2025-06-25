@@ -190,7 +190,9 @@
             <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt nav-icon"></i>Đăng nhập</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt nav-icon"></i>Đăng xuất</a>
+            <a class="nav-link" href="#" id="logout-link">
+              <i class="fas fa-sign-out-alt nav-icon"></i>Đăng xuất
+            </a>
           </li>
         </ul>
       </div>
@@ -207,4 +209,26 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
+<!-- Thêm thư viện SweetAlert nếu chưa có -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  document.getElementById("logout-link").addEventListener("click", function (event) {
+    event.preventDefault();
+
+    Swal.fire({
+      title: "Bạn có chắc muốn đăng xuất?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Đăng xuất",
+      cancelButtonText: "Hủy",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Điều hướng về trang login
+        window.location.href = "/login";
+      }
+    });
+  });
+</script>
+
 </html>
