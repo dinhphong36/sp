@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 async function connectDB() {
    try {
-        await mongoose.connect(process.env.MONGODB_URI,{
+        await mongoose.connect("mongodb://localhost:27017/mit_vietnam",{
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });

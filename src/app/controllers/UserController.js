@@ -236,7 +236,7 @@ class UserController {
     
             const tong = array.reduce((total, value) => total + value, 0);
     
-            res.render('Client/order', {
+            res.render('client/order', {
                 cart: mutipleMongoToObject(cart),
                 tong: tong,
             });
