@@ -26,7 +26,7 @@ var checkUser = (req,res, next) => {
     if(req.data){
         var role = req.data.role;
         if(role === 'user'){
-            res.redirect("/home");
+            res.redirect("/");
         }else if(role === 'admin'){
             res.redirect("/admin");
         }

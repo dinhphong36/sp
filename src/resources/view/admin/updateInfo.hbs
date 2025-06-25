@@ -1,73 +1,89 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<style>
-    body {
-        background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
-        font-family: 'Segoe UI', sans-serif;
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cập nhật sản phẩm</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    .update-card {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      border-left: 5px solid #0d6efd;
     }
-
-    .app {
-        max-width: 500px;
-        margin: 50px auto;
-        padding: 30px;
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    .update-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #0d6efd;
+      margin-bottom: 20px;
     }
-
-    .form-group label {
-        font-weight: 600;
-        margin-bottom: 8px;
+    .update-img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 2px solid #dee2e6;
+      margin-bottom: 15px;
     }
-
     .form-control {
-        border-radius: 12px;
-        padding: 10px 15px;
+      border-radius: 10px;
     }
-
-    .btn-primary {
-        width: 100%;
-        padding: 10px;
-        font-size: 16px;
-        border-radius: 12px;
-        background: linear-gradient(135deg, #4f46e5, #3b82f6);
-        border: none;
-        transition: background 0.3s ease;
+    .btn-update {
+      background-color: #0d6efd;
+      border: none;
     }
-
-    .btn-primary:hover {
-        background: linear-gradient(135deg, #4338ca, #2563eb);
+    .btn-update:hover {
+      background-color: #0b5ed7;
     }
+  </style>
+</head>
+<body class="bg-light">
 
-    img {
-        display: block;
-        margin: 15px auto;
-        border-radius: 12px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-</style>
+  <div class="container">
+    <div class="update-card">
+      <h2 class="update-title"><i class="fas fa-pen me-2"></i>Cập nhật sản phẩm</h2>
 
-<div class="app">
-    <form method="POST" action="/admin/{{mit._id}}?_method=PUT">
-        <div class="form-group mb-3">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{mit.name}}">
+      <form method="POST" action="/admin/{{mit._id}}?_method=PUT">
+        <div class="mb-3">
+          <label class="form-label">Tên sản phẩm</label>
+          <input type="text" class="form-control" name="name" value="{{mit.name}}" />
         </div>
+
         <div class="text-center">
-            <img src="{{mit.image}}" width="100px" height="100px" alt="Preview">
+          <img src="{{mit.image}}" alt="Ảnh sản phẩm" class="update-img" />
         </div>
-        <div class="form-group mb-3">
-            <label for="image">Image URL</label>
-            <input type="text" class="form-control" id="image" name="image" value="{{mit.image}}">
+
+        <div class="mb-3">
+          <label class="form-label">Link ảnh</label>
+          <input type="text" class="form-control" name="image" value="{{mit.image}}" />
         </div>
-        <div class="form-group mb-3">
-            <label for="price">Price</label>
-            <input type="number" class="form-control" id="price" name="price" value="{{mit.price}}">
+
+        <div class="mb-3">
+          <label class="form-label">Giá</label>
+          <input type="number" class="form-control" name="price" value="{{mit.price}}" />
         </div>
-        <div class="form-group mb-4">
-            <label for="info">Info</label>
-            <input type="text" class="form-control" id="info" name="info" value="{{mit.info}}">
+
+        <div class="mb-3">
+          <label class="form-label">Thông tin</label>
+          <textarea class="form-control" name="info" rows="3">{{mit.info}}</textarea>
         </div>
-        <button type="submit" class="btn btn-primary">💾 Cập nhật sản phẩm</button>
-    </form>
-</div>
+
+        <div class="d-flex justify-content-between">
+          <a href="/admin/updateSp" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-1"></i> Quay lại
+          </a>
+          <button type="submit" class="btn btn-update">
+            <i class="fas fa-save me-1"></i> Cập nhật
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>

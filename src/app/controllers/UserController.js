@@ -176,33 +176,30 @@ class UserController {
     }
     //post /cart/:id
     addToCart(req, res, next) {
-        const quantity = parseInt(req.body.quantity, 10);
+        const quantity = parseInt(req.body.quantity, 10);  // quantity giờ sẽ là số nguyên
         const id = req.params.id;
     
-        console.log(quantity);
+        if (!Number.isInteger(quantity) || quantity < 1) {
+            return res.status(400).json({ message: 'Số lượng không hợp lệ' });
+        }
     
-        mit.findOne({ _id: id })
+        mit.findById(id)
             .then(mit => {
                 if (!mit) {
                     return res.status(404).json({ message: 'Sản phẩm không tồn tại' });
                 }
     
-                // Tìm sản phẩm trong giỏ hàng (không phân biệt người dùng)
-                Cart.findOne({ name: mit.name })
+                Cart.findOne({ name: mit.name })  // không phân biệt người dùng
                     .then(existingItem => {
                         if (existingItem) {
-                            // Nếu đã có sản phẩm trong giỏ, cập nhật số lượng
                             return Cart.findByIdAndUpdate(
                                 existingItem._id,
                                 { $inc: { quantity: quantity } },
                                 { new: true }
-                            ).then(() => {
-                                return res.json({ message: 'Cập nhật thành công' });
-                            });
+                            ).then(() => res.json({ message: 'Cập nhật thành công' }));
                         } else {
-                            // Nếu chưa có, thêm mới vào giỏ hàng
                             const newOrder = new Cart({
-                                userId: null, // Không có user đăng nhập
+                                userId: null,
                                 name: mit.name,
                                 image: mit.image,
                                 price: mit.price,
@@ -211,9 +208,7 @@ class UserController {
                             });
     
                             return newOrder.save()
-                                .then(() => {
-                                    return res.json({ message: 'Thêm thành công' });
-                                });
+                                .then(() => res.json({ message: 'Thêm thành công' }));
                         }
                     })
                     .catch(error => {
@@ -226,6 +221,11 @@ class UserController {
                 return res.status(500).json({ message: 'Lỗi server khi truy vấn sản phẩm' });
             });
     }
+    
+    
+    
+    
+    
     //get /order
     showOrder(req, res) {
         Cart.find({})
@@ -251,7 +251,6 @@ class UserController {
     updateOrder(req, res) {
         const quantity = req.body.quantity;
         const id = req.params.id;
-        console.log(quantity);
         
         // Cập nhật không cần token
         Cart.updateOne({ _id: id }, { quantity: quantity })
@@ -267,7 +266,6 @@ class UserController {
     //post /delete-order/:id
     deleteOrder(req, res) {
         const id = req.params.id;
-        console.log(id);
         
         // Xóa không cần token
         Cart.deleteOne({ _id: id })

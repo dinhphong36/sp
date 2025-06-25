@@ -1,3 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      /* CSS để làm đẹp product grid */
+.row {
+    margin: 0 -10px;
+}
+
+.col-lg-3, .col-md-6, .col-sm-6 {
+    padding: 0 10px;
+    margin-bottom: 30px;
+}
+
+.card-product-grid {
+    background: #fff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-product-grid:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.img-wrap {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px 15px 0 0;
+}
+
+.img-wrap img {
+    transition: transform 0.3s ease;
+    object-fit: cover;
+}
+
+.card-product-grid:hover .img-wrap img {
+    transform: scale(1.05);
+}
+
+.info-wrap {
+    padding: 20px;
+    border-top: 1px solid #eee !important;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    text-decoration: none;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+    margin-bottom: 10px !important;
+}
+
+.title:hover {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.price-wrap {
+    margin: 15px 0;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: 700;
+    color: #e74c3c !important;
+}
+
+.btn {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 25px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-top: 15px !important;
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #0056b3, #003d82);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+    color: white;
+    text-decoration: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .col-lg-3, .col-md-6, .col-sm-6 {
+        margin-bottom: 20px;
+    }
+    
+    .info-wrap {
+        padding: 15px;
+    }
+    
+    .title {
+        font-size: 14px;
+    }
+    
+    .price {
+        font-size: 18px;
+    }
+    
+    .btn {
+        padding: 8px 20px;
+        font-size: 14px;
+    }
+}
+
+/* Animation khi load */
+.card-product-grid {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+        
+    </style>
+    <title>Document</title>
+</head>
+<body>
+
 <div class="row">
 {{#each mit}}
   <div class="col-lg-3 col-md-6 col-sm-6">

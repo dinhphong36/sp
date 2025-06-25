@@ -1,5 +1,105 @@
-<div class="container mt-4">
-    <p>Footer</p>
-    <p>Copyright © 2025</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Footer CSS */
+.footer {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 40px 0 20px 0;
+    margin-top: 50px;
+}
 
+.footer-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #ecf0f1;
+}
+
+.footer p {
+    color: #bdc3c7;
+    margin-bottom: 10px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.social-icon {
+    width: 35px;
+    height: 35px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    background: #3498db;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.footer-divider {
+    border-color: rgba(255,255,255,0.1);
+    margin: 30px 0 20px 0;
+}
+
+.footer i {
+    color: #3498db;
+}
+
+@media (max-width: 768px) {
+    .footer {
+        padding: 30px 0 15px 0;
+        text-align: center;
+    }
+    
+    .social-icons {
+        justify-content: center;
+    }
+}
+    </style>
+    <title>Document</title>
+</head>
+<body>
+  <!-- Footer HTML -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h5 class="footer-title">
+                    <i class="fas fa-store me-2"></i>Shop
+                </h5>
+                <p>Cung cấp sản phẩm chất lượng với giá cả hợp lý</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h5 class="footer-title">Liên hệ</h5>
+                <p><i class="fas fa-phone me-2"></i>+84 123 456 789</p>
+                <p><i class="fas fa-envelope me-2"></i>Phong@shop.com</p>
+                <p><i class="fas fa-map-marker-alt me-2"></i>541/11 Núi thành, Hải Châu, Đà Nẵng</p>
+            </div>
+        </div>
+        <hr class="footer-divider">
+        <div class="text-center">
+            <p class="mb-0">&copy; 2025 Shop. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
 </div>
+</body>
+</html>

@@ -1,21 +1,81 @@
-<div class="row">
-  <div class="col-lg-6">
-    <img src="{{mit.image}}" width="300px" height="300px" />
-  </div>
-  <div class="col-lg-6">
-    <h1>{{mit.name}}</h1>
-    <form id="addOrder">
-      <label for="quantity">Nhập số lượng:</label>
-      <input type="number" id="quantity" name="quantity" min="1" max="100" value="1" />
-      <br /><br />
-      <button type="submit" class="btn btn-success">Thêm vào giỏ hàng</button>
-    </form>
-  </div>
-</div>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{mit.name}} - Chi tiết sản phẩm</title>
 
-<div class="row mt-3">
-  {{mit.info}}
-</div>
+  <!-- Bootstrap & FontAwesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+  <!-- SweetAlert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <style>
+    /* Copy toàn bộ phần CSS bạn đã có ở trên (không cần chỉnh lại) */
+    {{!-- Insert CSS here --}} 
+  </style>
+</head>
+<body class="bg-light p-4">
+  <div class="container">
+    <!-- Product Section -->
+    <div class="product-section position-relative">
+      <div class="floating-elements">
+        <div class="floating-icon"><i class="fas fa-heart"></i></div>
+        <div class="floating-icon"><i class="fas fa-share"></i></div>
+      </div>
+
+      <div class="row align-items-center">
+        <!-- Image -->
+        <div class="col-lg-6">
+          <div class="product-image-container pulse-animation">
+            <img src="{{mit.image}}" alt="Product Image" class="img-fluid" />
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="col-lg-6">
+          <h1 class="product-title">{{mit.name}}</h1>
+          <div class="form-container">
+            <form id="addOrder">
+              <div class="quantity-group">
+                <label for="quantity" class="quantity-label">
+                  <i class="fas fa-cubes"></i> Nhập số lượng:
+                </label>
+                <input type="number" id="quantity" name="quantity" min="1" max="100" value="1" class="form-control quantity-input" />
+              </div>
+              <button type="submit" class="btn add-to-cart-btn w-100">
+                <i class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ hàng
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Section -->
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="product-info-section">
+          <h4 class="mb-3 text-primary">
+            <i class="fas fa-info-circle me-2"></i>Chi tiết sản phẩm
+          </h4>
+          <p>{{mit.info}}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="text-center mt-4">
+      <a href="/" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Quay về trang chủ
+      </a>
+    </div>
+  </div>
+
 
 <script>
   $(document).ready(function () {

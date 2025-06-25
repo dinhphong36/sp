@@ -1,35 +1,63 @@
-<form action="">
-    <table class="table mt-4">
-  <thead>
-    <tr>
-      <th scope="col" style="align-items: center;">STT</th>
-      <th scope="col" style="align-items: center;">Tên Điện Thoại</th>
-      <th scope="col" style="align-items: center;">Ảnh</th>
-      <th scope="col" style="align-items: center;">Giá</th>
-      <th scope="col" style="align-items: center;">Ngày Tạo</th>
-      <th scope="col" style="align-items: center;">Sửa</th>
-      <th scope="col" style="align-items: center;">Xóa</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each mit}}
-    <tr>
-      <td style="align-items: center;">{{sum @index 1}}</td>
-      <td style="align-items: center;">{{this.name}}</td>
-      <td style="align-items: center;">
-        <img src="{{this.image}}" width="80px" height="80px" />
-      </td>
-      <td style="align-items: center;">{{this.price}}</td>
-      <td style="align-items: center;">{{this.createdAt}}</td>
-      <td style="align-items: center;">
-        <a href="/admin/{{this._id}}/edit">Sửa</a>
-      </td>
-     <td style="align-items: center;">
-        <a href="/admin/{{this._id}}/deleteSp">Xóa</a>
-    </td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
+<!-- Bảng sản phẩm -->
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="text-primary m-0">
+      <i class="fas fa-list me-2"></i>Danh sách sản phẩm mít
+    </h3>
+    <a href="/admin/admininfo" class="btn btn-success">
+      <i class="fas fa-plus-circle me-1"></i> Thêm mới sản phẩm
+    </a>
+  </div>
 
-</form>
+  <div class="table-responsive shadow rounded">
+    <table class="table table-bordered table-hover align-middle text-center bg-white">
+      <thead class="table-primary">
+        <tr>
+          <th scope="col">STT</th>
+          <th scope="col">Tên sản phẩm</th>
+          <th scope="col">Ảnh</th>
+          <th scope="col">Giá</th>
+          <th scope="col">Ngày Tạo</th>
+          <th scope="col">Sửa</th>
+          <th scope="col">Xóa</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each mit}}
+        <tr>
+          <td>{{sum @index 1}}</td>
+          <td>{{this.name}}</td>
+          <td>
+            <img src="{{this.image}}" alt="Ảnh sản phẩm" class="img-thumbnail" style="width: 80px; height: 80px; object-fit: cover;">
+          </td>
+          <td>{{this.price}}</td>
+          <td>{{this.createdAt}}</td>
+          <td>
+            <a href="/admin/{{this._id}}/edit" class="btn btn-sm btn-warning">
+              <i class="fas fa-edit"></i> Sửa
+            </a>
+          </td>
+          <td>
+            <a href="/admin/{{this._id}}/deleteSp" class="btn btn-sm btn-danger">
+              <i class="fas fa-trash-alt"></i> Xóa
+            </a>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Nút quay về -->
+  <div class="mt-4 text-center">
+    <a href="/admin" class="btn btn-secondary">
+      <i class="fas fa-arrow-left me-1"></i> Quay về trang Admin
+    </a>
+  </div>
+</div>
+
+
+<!-- Bootstrap & FontAwesome nếu chưa có -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />

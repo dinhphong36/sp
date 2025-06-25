@@ -1,37 +1,47 @@
+<!-- Bootstrap Table Styled -->
 <form action="">
-    <table class="table mt-4">
-  <thead>
-    <tr>
-      <th scope="col" style="align-items: center;">STT</th>
-      <th scope="col" style="align-items: center;">Username</th>
-      <th scope="col" style="align-items: center;">password</th>
-      <th scope="col" style="align-items: center;">email</th>
-      <th scope="col" style="align-items: center;">role</th>
-      <th scope="col" style="align-items: center;">SĐT</th>
-      <th scope="col" style="align-items: center;">Ngày Tạo</th>
-      <th scope="col" style="align-items: center;">Sửa</th>
-      <th scope="col" style="align-items: center;">Xóa</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each User}}
-    <tr>
-      <td style="align-items: center;">{{sum @index 1}}</td>
-      <td style="align-items: center;">{{this.username}}</td>
-      <td style="align-items: center;">{{this.password}}</td>
-      <td style="align-items: center;">{{this.email}}</td>
-      <td style="align-items: center;">{{this.role}}</td>
-      <td style="align-items: center;">{{this.sdt}}</td>
-      <td style="align-items: center;">{{this.createdAt}}</td>
-      <td style="align-items: center;">
-        <a href="/admin/showUser/{{this._id}}/edit">Sửa</a>
-      </td>
-     <td style="align-items: center;">
-        <a href="/admin/showUser/{{this._id}}/deleteUser">Xóa</a>
-    </td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
-
+  <div class="table-responsive mt-4 shadow rounded">
+    <table class="table table-hover table-bordered align-middle mb-0">
+      <thead class="table-primary text-center">
+        <tr>
+          <th scope="col">STT</th>
+          <th scope="col">Username</th>
+          <th scope="col">Password</th>
+          <th scope="col">Email</th>
+          <th scope="col">Role</th>
+          <th scope="col">SĐT</th>
+          <th scope="col">Ngày Tạo</th>
+          <th scope="col">Sửa</th>
+          <th scope="col">Xóa</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each User}}
+        <tr class="text-center">
+          <td>{{sum @index 1}}</td>
+          <td>{{this.username}}</td>
+          <td>{{this.password}}</td>
+          <td>{{this.email}}</td>
+          <td>
+            <span class="badge bg-{{#if (eq this.role 'admin')}}danger{{else}}secondary{{/if}}">
+              {{this.role}}
+            </span>
+          </td>
+          <td>{{this.sdt}}</td>
+          <td>{{this.createdAt}}</td>
+          <td>
+            <a href="/admin/showUser/{{this._id}}/edit" class="btn btn-sm btn-warning">
+              <i class="fas fa-edit"></i> Sửa
+            </a>
+          </td>
+          <td>
+            <a href="/admin/showUser/{{this._id}}/deleteUser" class="btn btn-sm btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa người dùng này?');">
+              <i class="fas fa-trash-alt"></i> Xóa
+            </a>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
 </form>
